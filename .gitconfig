@@ -1,0 +1,47 @@
+[user]
+	name = Don Reckinger
+	email = don.reckinger@oracle.com
+
+[credential]
+	helper = osxkeychain
+[github]
+	user = dreckinger 
+
+[gitlab]
+        user = drecking
+[alias]
+	l = "!source ~/.githelpers && prett_git_log"
+	ci = commit -v
+
+[color]
+	ui = auto
+	diff = auto
+	status = auto
+	branch = auto
+
+[color "branch"]
+	current = yellow reverse
+	remote = green bold
+	local = blue bold
+
+[color "diff"]
+	meta = blue bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[push]
+	default = current
+
+[pull]
+         default = current
+
+[core]
+	editor = vim -w
+	excludesfile = /Volumes/extra/Users/drecking/.gitignore_global
+	mergeoptions = --no-edit
+	autocrlf = input
+
+[heroku]
+[alias]
+	show-graph = log --graph --abbrev-commit --pretty=oneline
