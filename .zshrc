@@ -1,14 +1,54 @@
 # Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-
 source /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# zgen
+export ZGEN_RESET_ON_CHANGE=($HOME/.zshrc)
+source $HOME/.zgen/zgen.zsh
+
+if ! zgen saved; then
+        echo "Creating a zgen save"
+
+        zgen prezto gnu-utility prefix 'g'
+        zgen prezto editor key-bindings 'vi'
+        zgen prezto prompt theme 'agnoster'
+        #zgen prezto tmux:auto-start local 'yes'
+        zgen prezto '*:*' case-sensitive 'yes'
+        zgen prezto '*:*' color 'yes'
+
+        zgen prezto
+        zgen prezto environment
+        zgen prezto terminal
+        zgen prezto editor
+        zgen prezto directory
+        zgen prezto spectrum
+        zgen prezto homebrew
+        zgen prezto completion
+        zgen prezto git
+        zgen prezto archive
+        zgen prezto osx
+        zgen prezto command-not-found
+        zgen prezto fasd
+        zgen prezto history-substring-search
+        zgen prezto syntax-highlighting
+        zgen prezto prompt
+
+        zgen load djui/alias-tips
+        #zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+        zgen load caarlos0/zsh-git-sync
+        zgen load TBSliver/zsh-plugin-colored-man
+        zgen load mafredri/zsh-async
+        zgen load junegunn/fzf shell
+        
+        zgen load zsh-users/zsh-syntax-highlighting
+        zgen load tarruda/zsh-autosuggestions
+
+        zgen save
 fi
+
+# Source Prezto.
+#if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+#  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+#fi
 
 # Customize to your needs...
 # Agnoster User configuration
@@ -19,8 +59,21 @@ export KEYTIMEOUT=1
 export MANPAGER='col -bx | vim -c ":set ft=man nonu nolist" -R -'
 export EDITOR='subl -w'
 export GIT_EDITOR=vim
+export apiurl='https://api-z27.compute.us6.oraclecloud.com'
+export username="/Compute-usoracle17704/girish.ahuja@oracle.com"
+export tenant="/Compute-usoracle17704"
 
+#Proxy
+export HTTP_PROXY=http://www-proxy.us.oracle.com:80
+export http_proxy=$HTTP_PROXY
+export https_proxy=$HTTP_PROXY
+export HTTPS_PROXY=$HTTP_PROXY
+export ftp_proxy=$HTTP_PROXY
+export rsync_proxy=$HTTP_PROXY
+export RSYNC_PROXY=$HTTP_PROXY
+export no_proxy="localhost,127.0.0.1,us.oracle.com,oracleoutsourcing.com,192.168.99.100"
 alias proxyoff='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY ftp_proxy rsync_proxy'
+eval $(thefuck --alias fuck)
 
 # Use vim cli mode
 bindkey '^P' up-history
@@ -78,11 +131,19 @@ alias pscan='sudo nmap -v -sn $2 -oG -' # ping scan a host
 alias pscanf='sudo nmap -sn -sL -PE -n -v --system-dns --disable-arp-ping -iL $1 -oG - > output >/dev/null 2>&1'
 alias mco_shell_me='gzip -c $1 | base64 -w0' #$1 is filename to compress
 alias mco_shell_deploy="mco shell 'echo "{$1}" |base64 -di|gzip -d|bash'"
+alias ldapme="ldapsearch -h adc08ldap.oracle.com -p 389 -b dc=oracle,dc=com \
+-D cn=proxyuser,ou=AdminUsers,dc=oracle,dc=com -x -w r3@ls3cure uid=drecking"
 alias shareme='sudo python -m SimpleHTTPServer 80'
+alias getpup='rsync -a drecking@adc08puppet301:/home/drecking/mco_project/nightly /Users/drecking/mco_project/'
+alias beowulf='ssh -l drecking dhcp-adc2-gen-east-144-20-25-93.usdhcp.oraclecorp.com'
 alias mcop='mco -c ~/.mcollective/prod-client.cfg $*'
 alias mcou='mco -c ~/.mcollective/uat-client.cfg $*'
+alias oc='oracle-compute -a $apiurl -u $username -p /Users/drecking/pass $*'
+alias na='nimbula-api -a $apiurl -u $username -p /Users/drecking/pass $*'
+alias naa='nimbula-admin -a $apiurl -u $username -p /Users/drecking/pass $*'
 alias pjson='python -mjson.tool $*'
 alias uuid="uuidgen | tr -d '\n' | tr '[:upper:]' '[:lower:]'  | pbcopy && pbpaste && echo"
+alias so="ssh -i ~/.ssh/omcs001_pvt_key.openssh -l opc $*"
 alias todo="~/.todo/todo.sh $*"
 alias weather="~/bin/weather.15m.py"
 
@@ -100,3 +161,5 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 # Various exports
 source ~/.xsh
 eval $(thefuck --alias)
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
