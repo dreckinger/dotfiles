@@ -117,7 +117,6 @@ setopt inc_append_history
 setopt share_history # share command history data
 
 # Aliases
-alias selects="port echo '*_select' | cut -d_ -f1"
 alias epoch="date -j -f '%a %b %d %T %Z %Y' '`date`' '+%s'"
 alias idle="python -m idlelib.idle"
 alias c='clear'
@@ -131,11 +130,7 @@ alias pscan='sudo nmap -v -sn $2 -oG -' # ping scan a host
 alias pscanf='sudo nmap -sn -sL -PE -n -v --system-dns --disable-arp-ping -iL $1 -oG - > output >/dev/null 2>&1'
 alias mco_shell_me='gzip -c $1 | base64 -w0' #$1 is filename to compress
 alias mco_shell_deploy="mco shell 'echo "{$1}" |base64 -di|gzip -d|bash'"
-alias ldapme="ldapsearch -h adc08ldap.oracle.com -p 389 -b dc=oracle,dc=com \
--D cn=proxyuser,ou=AdminUsers,dc=oracle,dc=com -x -w r3@ls3cure uid=drecking"
 alias shareme='sudo python -m SimpleHTTPServer 80'
-alias getpup='rsync -a drecking@adc08puppet301:/home/drecking/mco_project/nightly /Users/drecking/mco_project/'
-alias beowulf='ssh -l drecking dhcp-adc2-gen-east-144-20-25-93.usdhcp.oraclecorp.com'
 alias mcop='mco -c ~/.mcollective/prod-client.cfg $*'
 alias mcou='mco -c ~/.mcollective/uat-client.cfg $*'
 alias oc='oracle-compute -a $apiurl -u $username -p /Users/drecking/pass $*'
@@ -143,7 +138,6 @@ alias na='nimbula-api -a $apiurl -u $username -p /Users/drecking/pass $*'
 alias naa='nimbula-admin -a $apiurl -u $username -p /Users/drecking/pass $*'
 alias pjson='python -mjson.tool $*'
 alias uuid="uuidgen | tr -d '\n' | tr '[:upper:]' '[:lower:]'  | pbcopy && pbpaste && echo"
-alias so="ssh -i ~/.ssh/omcs001_pvt_key.openssh -l opc $*"
 alias todo="~/.todo/todo.sh $*"
 alias weather="~/bin/weather.15m.py"
 
